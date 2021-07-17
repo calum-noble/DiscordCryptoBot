@@ -1,0 +1,24 @@
+{
+  "name": "discordcryptobot",
+  "version": "1.0.0",
+  "description": "A bot built for Discord that retrieves updated Crypto market information via CoinMarket API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevinXuzio/DiscordCryptoBot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KevinXuzio/DiscordCryptoBot/issues"
+  },
+  "homepage": "https://github.com/KevinXuzio/DiscordCryptoBot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}
