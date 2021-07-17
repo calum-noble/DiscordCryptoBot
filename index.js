@@ -1,9 +1,10 @@
 const Discord = require('discord.js');
+const config = require('./config.json');
 const { cpuUsage } = require('process');
 const client = new Discord.Client();
 const prefix = "!";
 
-const coinMarketCapKey = '897bc04c-ab7d-4272-ad22-ecc18580efcf';
+const coinMarketCapKey = config.coinmarket_token;
 
 const rp = require('request-promise');
 
@@ -11,7 +12,7 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
-client.login('ODY1OTQ5Mjk3NzI4MTU5Nzc0.YPLcIQ.O5XIzLyoMkDF0nHUZ-Suii3Y5BM');
+client.login(config.discord_token);
 
 client.ws.on('INTERACTION_CREATE', async interaction => {
   const command = interaction.data.name.toLowerCase();
