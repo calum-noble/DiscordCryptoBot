@@ -37,16 +37,11 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
       };
 
       rp(requestOptions).then(response => {
-        console.log("running")
         var command = symbol;
-        // console.log('API call response:', response); // For seeing info in console. Not needed unless troubleshooting
-        // console.log(command + ' Price:', response['data'][command]['quote']['USD']['price']); // For seeing info in console. Not needed unless troubleshooting
-        console.log('eh')
         id = response['data'][symbol]['id'];
         unrounded = response['data'][symbol]['quote']['USD']['price'];
         percentChange = response['data'][symbol]['quote']['USD']['percent_change_1h'];
         percentChange = percentChange.toFixed(2);
-        console.log("ehhh")
         if (percentChange < 0){
           sign = "";
         }
@@ -68,11 +63,11 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
         })
         
         rounded = priceFormatter.format(unrounded);
-        console.log("why")
+        var curDate = new Date(Date.now());
         // rounded = unrounded.toLocaleString("en-US", {minimumFractionDigits: 2});
         var discEmbed = {
           color: 538699,
-          title: 'Hello world',
+          timestamp: curDate.toISOString(),
           // timestamp: Date.now(),
           thumbnail: {
               url: "https://s2.coinmarketcap.com/static/img/coins/32x32/" + id + ".png",
@@ -88,7 +83,6 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
           ]
         };
         client.api.interactions(interaction.id, interaction.token).callback.post({
-          
           data: {
               type: 4,
               data: {
@@ -96,53 +90,34 @@ client.ws.on('INTERACTION_CREATE', async interaction => {
               }
           }
         })
-        // message.channel.send({
-            // "embed": {
-            //    "color": 538699,
-            //    "timestamp": Date.now(),
-            //    "footer": {
-            //      "text": "CryptoBot"
-            //    },
-            //    "thumbnail": {
-            //      "url": "https://s2.coinmarketcap.com/static/img/coins/32x32/" + id + ".png",
-            //    },
-            //    "fields": [
-            //      {
-            //        "name": command,
-            //        "value": "**" + rounded + " USD " + "(" + sign + percentChange + "%)**"
-            //      }
-            //    ]
-            //  }
-        //    });
+       
         }).catch((err) => {
-        // console.log('API call error:', err.message); // For seeing info in console. Not needed unless troubleshooting
-
-          // client.api.interactions(interaction.id, interaction.token).callback.post({
-          //   data: {
-          //       type: 4,
-          //       data: {
-          //           embeds: [{
-          //             "embed": {
-          //               "color": 538699,
-          //               "timestamp": Date.now(),
-          //               "footer": {
-          //                 "text": "CryptoBot"
-          //               },
-          //               "thumbnail": {
-          //                 "url": "https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/error.png"
-          //               },
-          //               "fields": [
-          //                 {
-          //                   "name": "ERROR",
-          //                   "value": "Please enter a valid Crypto Symbol"
-          //                 }
-          //               ]
-          //             }
-          //           }]
-          //       }
-          //   }
-          // })
-        
+          var curDate = new Date(Date.now());
+          var discEmbed = {
+            color: 538699,
+            timestamp: curDate.toISOString(),
+            // timestamp: Date.now(),
+            thumbnail: {
+                url: "https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/error.png",
+            },
+            footer: {
+              text: "CryptoBot"
+            },
+            fields: [
+              {
+                name: "ERROR",
+                value: "Please enter a valid Crypto Symbol"
+              }
+            ]
+          };
+          client.api.interactions(interaction.id, interaction.token).callback.post({
+            data: {
+                type: 4,
+                data: {
+                    embeds: [discEmbed]
+                }
+            }
+          })
         });
 
       
